@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import Axios from 'axios';
 
 import {View} from 'react-native';
-// import {useDispatch} from 'react-redux';
-// import {getAllMenuCreator} from '../redux/actions/action';
+import {useDispatch} from 'react-redux';
+import {getAllMenuCreator} from '../redux/actions/action';
 
 import BottomNav from '../components/bottomNav';
 import Search from '../components/search';

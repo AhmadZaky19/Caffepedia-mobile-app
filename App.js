@@ -6,8 +6,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Provider} from 'react-redux';
 import storeRedux from './src/redux';
 
-import Home from './src/screens/home';
-import Orders from './src/screens/orders';
+import Home from './src/screens/Home';
+import Orders from './src/screens/Orders';
+import Login from './src/screens/Login';
 
 const Stack = createStackNavigator();
 
@@ -16,8 +17,9 @@ const App = () => {
     <NavigationContainer>
       <Provider store={storeRedux}>
         <Stack.Navigator headerMode="none">
-          <Stack.Screen name="home" component={Home} />
-          <Stack.Screen name="orders" component={Orders} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Orders" component={Orders} />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>
