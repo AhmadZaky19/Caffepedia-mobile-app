@@ -1,30 +1,31 @@
 import {
-  getAllMenu,
-  searchMenu,
+  getAllProduct,
+  searchProduct,
   getAllCategory,
   authLogin,
+  authRegister,
   getAllTransaction,
 } from '../../utils/http';
 import actionType from './actionType';
 
-export const getAllMenuCreator = () => {
-  console.log(getAllMenu());
+export const getAllProductCreator = () => {
+  console.log(getAllProduct());
   return {
-    type: actionType.getAllMenu,
-    payload: getAllMenu(),
+    type: actionType.getAllProduct,
+    payload: getAllProduct(),
   };
 };
 
-export const clearMenuCreator = () => {
+export const clearProductCreator = () => {
   return {
-    type: actionType.clearMenu,
+    type: actionType.clearProduct,
   };
 };
 
-export const searchMenuCreator = (name, by) => {
+export const searchProductCreator = (name, by) => {
   return {
-    type: actionType.getAllMenu,
-    payload: searchMenu(name, by),
+    type: actionType.getAllProduct,
+    payload: searchProduct(name, by),
   };
 };
 
@@ -82,16 +83,23 @@ export const authLoginCreator = (name, password) => {
   };
 };
 
-export const checkedMenuCreator = (index) => {
+export const authRegisterCreator = (name, email, password) => {
   return {
-    type: actionType.checkedMenu,
+    type: actionType.authLogin,
+    payload: authRegister(name, email, password),
+  };
+};
+
+export const checkedProductCreator = (index) => {
+  return {
+    type: actionType.checkedProduct,
     payload: index,
   };
 };
 
-export const uncheckedMenuCreator = (index) => {
+export const uncheckedProductCreator = (index) => {
   return {
-    type: actionType.checkedMenu,
+    type: actionType.checkedProduct,
     payload: index,
   };
 };

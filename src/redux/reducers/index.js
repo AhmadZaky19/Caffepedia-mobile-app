@@ -1,12 +1,14 @@
 import {combineReducers} from 'redux';
-import menuReducer from './menu';
+import productReducer from './product';
 import cartReducer from './cart';
 import categoryReducer from './category';
 import authReducer from './auth';
 import transactionReducer from './transaction';
+import searchProduct from './searchProduct';
 
 const indexReducer = combineReducers({
-  menu: menuReducer,
+  searchProduct: searchProduct,
+  product: productReducer,
   cart: cartReducer,
   category: categoryReducer,
   auth: authReducer,

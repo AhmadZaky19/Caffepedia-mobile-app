@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
 import {Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {Card, CardItem} from 'native-base';
-// import {useSelector, useDispatch} from 'react-redux';
-// import {addToCartCreator, plusQtyCreator} from '../../redux/actions/action';
+import {useSelector, useDispatch} from 'react-redux';
+import {addToCartCreator, plusQtyCreator} from '../../redux/actions/action';
 
-const ListMenu = ({navigation}) => {
-  const listMenu = useSelector((state) => state.menu.data);
+const Product = ({navigation}) => {
+  const listProduct = useSelector((state) => state.product.data);
   const listCarts = useSelector((state) => state.cart.data);
 
   const dispatch = useDispatch();
@@ -37,12 +37,12 @@ const ListMenu = ({navigation}) => {
             justifyContent: 'space-evenly',
             flexWrap: 'wrap',
           }}>
-          {listMenu.length ? (
+          {listProduct.length ? (
             <Fragment>
-              {listMenu.map((item) => {
+              {listProduct.map((item, index) => {
                 return (
                   <TouchableOpacity
-                    key={item.id_product}
+                    key={index}
                     onPress={() => {
                       addToCart(
                         item.id_product,
@@ -50,7 +50,7 @@ const ListMenu = ({navigation}) => {
                         item.price_product,
                         item.img_product,
                       );
-                      navigation.navigate('Orders');
+                      navigation.navigate('carts');
                     }}>
                     <Card style={{width: 150}}>
                       <CardItem cardBody>
@@ -79,7 +79,7 @@ const ListMenu = ({navigation}) => {
             </Fragment>
           ) : (
             <Text style={{fontSize: 18, fontWeight: 'bold', marginTop: 20}}>
-              Loading...
+              Loading data...
             </Text>
           )}
         </View>
@@ -88,4 +88,4 @@ const ListMenu = ({navigation}) => {
   );
 };
 
-export default ListMenu;
+export default Product;

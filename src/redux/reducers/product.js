@@ -8,24 +8,24 @@ let initialState = {
   isRejected: false,
 };
 
-const menuReducer = (prevState = initialState, {type, payload}) => {
+const productReducer = (prevState = initialState, {type, payload}) => {
   switch (type) {
-    case actionType.getAllMenu + '_PENDING':
+    case actionType.getAllProduct + '_PENDING':
       return {
         ...prevState,
         isPending: true,
       };
-    case actionType.getAllMenu + '_REJECTED':
+    case actionType.getAllProduct + '_REJECTED':
       return {
         ...prevState,
         isRejected: true,
         data: payload,
         isPending: false,
       };
-    case actionType.getAllMenu + '_FULFILLED':
+    case actionType.getAllProduct + '_FULFILLED':
       let newData = [...prevState.data];
       payload.data.data.map((item) => {
-        const dataMenu = {
+        const dataProduct = {
           id_product: item.id_product,
           img_product: item.img_product,
           name_category: item.name_category,
@@ -33,7 +33,7 @@ const menuReducer = (prevState = initialState, {type, payload}) => {
           price_product: item.price_product,
           checked: false,
         };
-        return (newData = newData.concat(dataMenu));
+        return (newData = newData.concat(dataProduct));
       });
 
       return {
@@ -43,19 +43,19 @@ const menuReducer = (prevState = initialState, {type, payload}) => {
         data: newData,
         isRejected: false,
       };
-    case actionType.searchMenu + '_PENDING':
+    case actionType.searchProduct + '_PENDING':
       return {
         ...prevState,
         isPending: true,
       };
-    case actionType.searchMenu + '_REJECTED':
+    case actionType.searchProduct + '_REJECTED':
       return {
         ...prevState,
         isRejected: true,
         data: payload,
         isPending: false,
       };
-    case actionType.searchMenu + '_FULFILLED':
+    case actionType.searchProduct + '_FULFILLED':
       return {
         ...prevState,
         isFulfilled: true,
@@ -63,7 +63,7 @@ const menuReducer = (prevState = initialState, {type, payload}) => {
         data: payload.data.data,
         isRejected: false,
       };
-    case actionType.checkedMenu:
+    case actionType.checkedProduct:
       let arrData = [...prevState.data];
       arrData[payload] = {
         ...arrData[payload],
@@ -73,7 +73,7 @@ const menuReducer = (prevState = initialState, {type, payload}) => {
         ...prevState,
         data: arrData,
       };
-    case actionType.unCheckedMenu:
+    case actionType.unCheckedProduct:
       arrData[payload] = {
         ...arrData[payload],
         checked: false,
@@ -82,7 +82,7 @@ const menuReducer = (prevState = initialState, {type, payload}) => {
         ...prevState,
         data: arrData,
       };
-    case actionType.clearMenu:
+    case actionType.clearProduct:
       return {
         ...prevState,
         data: [],
@@ -92,4 +92,4 @@ const menuReducer = (prevState = initialState, {type, payload}) => {
   }
 };
 
-export default menuReducer;
+export default productReducer;

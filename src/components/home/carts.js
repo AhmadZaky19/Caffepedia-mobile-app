@@ -1,11 +1,44 @@
-import React, {Fragment} from 'react';
-import {View, Image, Text, TouchableOpacity, TextInput} from 'react-native';
+import React, {Fragment, useEffect} from 'react';
+import {View, Image, Text, TouchableOpacity} from 'react-native';
 import {Button} from 'native-base';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  minusQtyCreator,
+  plusQtyCreator,
+  deleteCartCreator,
+} from '../../redux/actions/action';
 
 const Cart = () => {
+  useEffect(() => {
+    // useSelector((state) => state.cart.data);
+  }, [listCart]);
   const listCart = useSelector((state) => state.cart.data);
+  const dispatch = useDispatch();
+
   console.log(listCart);
+
+  const handlePlus = (id) => {
+    const index = listCart.findIndex((item) => {
+      return item.id_product === id;
+    });
+
+    dispatch(plusQtyCreator(index));
+  };
+
+  const handleMinus = (id) => {
+    const index = listCart.findIndex((item) => {
+      return item.id_product === id;
+    });
+    dispatch(minusQtyCreator(index));
+  };
+
+  const deleteCart = (id) => {
+    const index = listCart.findIndex((item) => {
+      return item.id_product === id;
+    });
+    dispatch(deleteCartCreator(index));
+  };
+
   return (
     <>
       <View style={{marginTop: 30, flex: 1}}>
@@ -14,7 +47,9 @@ const Cart = () => {
             <View style={{flex: 1}}>
               {listCart.map((item) => {
                 return (
-                  <View style={{flexDirection: 'row', marginBottom: 20}}>
+                  <View
+                    style={{flexDirection: 'row', marginBottom: 25}}
+                    key={item.id_product}>
                     <Image
                       source={{
                         uri: item.img_product,
@@ -33,10 +68,13 @@ const Cart = () => {
                         alignItems: 'center',
                         flexDirection: 'row',
                       }}>
-                      <Image
-                        source={require('../../assets/icons/minus.png')}
-                        style={{width: 25, height: 25}}
-                      />
+                      <TouchableOpacity
+                        onPress={() => handleMinus(item.id_product)}>
+                        <Image
+                          source={require('../../assets/icons/minus.png')}
+                          style={{width: 25, height: 25}}
+                        />
+                      </TouchableOpacity>
                       <View
                         style={{
                           borderBottomWidth: 1,
@@ -54,10 +92,13 @@ const Cart = () => {
                           {item.qty}
                         </Text>
                       </View>
-                      <Image
-                        source={require('../../assets/icons/plus.png')}
-                        style={{width: 25, height: 25}}
-                      />
+                      <TouchableOpacity
+                        onPress={() => handlePlus(item.id_product)}>
+                        <Image
+                          source={require('../../assets/icons/plus.png')}
+                          style={{width: 25, height: 25}}
+                        />
+                      </TouchableOpacity>
                     </View>
                     <View
                       style={{
@@ -66,8 +107,19 @@ const Cart = () => {
                         alignItems: 'center',
                       }}>
                       <Text style={{fontSize: 16, fontWeight: 'bold'}}>
-                        Rp. {item.price_product}
+                        Rp. {item.price_product * item.qty}
                       </Text>
+                      <TouchableOpacity>
+                        <Button
+                          block
+                          danger
+                          style={{marginTop: 10, width: 100, borderRadius: 20}}
+                          onPress={() => deleteCart(item.id_product)}>
+                          <Text style={{color: 'white', fontWeight: 'bold'}}>
+                            Delete
+                          </Text>
+                        </Button>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 );
@@ -85,8 +137,11 @@ const Cart = () => {
                   Total Harga
                 </Text>
                 <Text
-                  style={{fontWeight: 'bold', fontSize: 18, color: 'orange'}}>
-                  Rp. 20.000
+                  style={{fontWeight: 'bold', fontSize: 18, color: '#B82601'}}>
+                  Rp.{' '}
+                  {listCart.reduce((total, item) => {
+                    return total + item.price_product * item.qty;
+                  }, 0)}
                 </Text>
               </View>
               <View
@@ -96,10 +151,10 @@ const Cart = () => {
                   alignItems: 'flex-end',
                   marginRight: 20,
                 }}>
-                <Button block rounded success>
+                <Button block rounded success on>
                   <Text
                     style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
-                    Beli 3
+                    Buy
                   </Text>
                 </Button>
               </View>
@@ -113,7 +168,7 @@ const Cart = () => {
                 fontWeight: 'bold',
                 fontSize: 18,
               }}>
-              No list cart !
+              No Menu Selected !
             </Text>
           </View>
         )}

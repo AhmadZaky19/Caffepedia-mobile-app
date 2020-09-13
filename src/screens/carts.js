@@ -1,16 +1,16 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import BottomNav from '../components/bottomNav';
-import Header from '../components/header';
-import Cart from '../components/cart';
+import BottomNav from '../components/home/bottomNav';
+import CartHeader from '../components/home/cartHeader';
+import Cart from '../components/home/carts';
 
-const Orders = ({navigation}) => {
+const Carts = ({navigation}) => {
   return (
     <>
       <View style={{flex: 1}}>
         <View style={{flex: 1}}>
-          <Header />
+          <CartHeader />
           <Cart />
         </View>
         <BottomNav navigation={navigation} />
@@ -19,4 +19,4 @@ const Orders = ({navigation}) => {
   );
 };
 
-export default Orders;
+export default Carts;
