@@ -28,7 +28,7 @@ const Login = ({navigation}) => {
       <View style={{marginTop: 20}}>
         <View style={{position: 'relative'}}>
           <TextInput
-            placeholder="email"
+            placeholder="Username"
             name="email"
             style={{
               borderWidth: 1,
@@ -46,7 +46,7 @@ const Login = ({navigation}) => {
         <View style={{position: 'relative', marginTop: 20}}>
           <TextInput
             secureTextEntry
-            placeholder="password"
+            placeholder="Password"
             style={{
               borderWidth: 1,
               borderColor: '#e8e8e8',
@@ -66,7 +66,7 @@ const Login = ({navigation}) => {
           <Button
             block
             rounded
-            style={{backgroundColor: '#4abdac'}}
+            style={{backgroundColor: '#90ee90'}}
             onPress={handleSubmit}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
               LOGIN
@@ -79,7 +79,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity>
           <Text
             style={{fontSize: 16, fontWeight: 'bold', color: '#4abdac'}}
-            onPress={() => navigation.navigate('Register')}>
+            onPress={() => navigation.navigate('register')}>
             {' '}
             Register
           </Text>

@@ -1,27 +1,27 @@
 import Axios from 'axios';
 
 export const getAllProduct = () => {
-  const URI = `http://192.168.1.6:8000/pagination?page=1&limit=9`;
+  const URI = `http://192.168.1.5:8000/pagination?page=1&limit=9`;
   return Axios.get(URI);
 };
 
 export const getAllTransaction = () => {
-  const URI = `http://192.168.1.6:8000/transaction`;
+  const URI = `http://192.168.1.5:8000/transaction`;
   return Axios.get(URI);
 };
 
 export const getAllCategory = () => {
-  const URI = `http://192.168.1.6:8000/categories`;
+  const URI = `http://192.168.1.5:8000/categories`;
   return Axios.get(URI);
 };
 
 export const searchProduct = (name, by) => {
-  const URI = `http://192.168.1.6:8000/search?name=${name}&by=${by}`;
+  const URI = `http://192.168.1.5:8000/search?name=${name}&by=${by}`;
   return Axios.get(URI);
 };
 
 export const authLogin = (name, password) => {
-  const URI = `http://192.168.1.6:8000/auth/login`;
+  const URI = `http://192.168.1.5:8000/auth/login`;
   return Axios.post(URI, {
     username: name,
     password: password,
@@ -29,7 +29,7 @@ export const authLogin = (name, password) => {
 };
 
 export const authRegister = (name, email, password) => {
-  const URI = `http://192.168.1.6:8000/auth/register`;
+  const URI = `http://192.168.1.5:8000/auth/register`;
   return Axios.post(URI, {
     username: name,
     email: email,

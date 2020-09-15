@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
-import {Card, CardItem} from 'native-base';
+import {Card, CardItem, StyleProvider} from 'native-base';
 import {useSelector, useDispatch} from 'react-redux';
 import {addToCartCreator, plusQtyCreator} from '../../redux/actions/action';
 
@@ -58,7 +58,7 @@ const Product = ({navigation}) => {
                           source={{
                             uri: item.img_product,
                           }}
-                          style={{height: 100, width: null, flex: 1}}
+                          style={{height: 100, width: null, flex: 1, borderWidth: 1, borderRadius: 20}}
                         />
                       </CardItem>
                       <CardItem style={{justifyContent: 'center'}}>

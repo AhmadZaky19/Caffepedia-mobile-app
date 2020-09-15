@@ -27,7 +27,7 @@ const Register = ({navigation}) => {
       <View style={{marginTop: 20}}>
         <View style={{position: 'relative'}}>
           <TextInput
-            placeholder="Name"
+            placeholder="Username"
             style={{
               borderWidth: 1,
               borderColor: '#e8e8e8',
@@ -80,10 +80,10 @@ const Register = ({navigation}) => {
           <Button
             block
             rounded
-            style={{backgroundColor: '#4abdac'}}
+            style={{backgroundColor: '#90ee90'}}
             onPress={handleSubmit}>
             <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
-              Create Account
+              Register Account
             </Text>
           </Button>
         </TouchableOpacity>
@@ -93,7 +93,7 @@ const Register = ({navigation}) => {
         <TouchableOpacity>
           <Text
             style={{fontSize: 16, fontWeight: 'bold', color: '#4abdac'}}
-            onPress={() => navigation.navigate('Login')}>
+            onPress={() => navigation.navigate('login')}>
             {' '}
             Login
           </Text>

@@ -14,9 +14,9 @@ const User = ({navigation}) => {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#4abdac',
-          borderBottomRightRadius: 50,
-          borderBottomLeftRadius: 50,
+          backgroundColor: '#90ee90',
+          borderBottomRightRadius: 20,
+          borderBottomLeftRadius: 20,
           position: 'relative',
           justifyContent: 'flex-end',
           alignItems: 'center',

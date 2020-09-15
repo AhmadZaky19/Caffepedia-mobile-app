@@ -72,7 +72,7 @@ const Cart = () => {
                         onPress={() => handleMinus(item.id_product)}>
                         <Image
                           source={require('../../assets/icons/minus.png')}
-                          style={{width: 25, height: 25}}
+                          style={{width: 35, height: 20}}
                         />
                       </TouchableOpacity>
                       <View
@@ -137,7 +137,7 @@ const Cart = () => {
                   Total Harga
                 </Text>
                 <Text
-                  style={{fontWeight: 'bold', fontSize: 18, color: '#B82601'}}>
+                  style={{fontWeight: 'bold', fontSize: 18, color: '#dc143c'}}>
                   Rp.{' '}
                   {listCart.reduce((total, item) => {
                     return total + item.price_product * item.qty;

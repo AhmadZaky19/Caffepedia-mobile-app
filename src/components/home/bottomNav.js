@@ -13,7 +13,8 @@ const BottomNav = ({navigation}) => {
           height: 55,
           flexDirection: 'row',
           borderTopWidth: 1,
-          borderColor: '#e8e8e8',
+          borderColor: '#f08080',
+          backgroundColor: '#f08080',
         }}>
         <TouchableOpacity
           onPress={() => {
@@ -51,7 +52,7 @@ const BottomNav = ({navigation}) => {
             source={require('../../assets/icons/user.png')}
             style={{width: 23, height: 23}}
           />
-          <Text style={{color: '#545454', marginTop: 4}}>Account</Text>
+          <Text style={{color: '#545454', marginTop: 4}}>User</Text>
         </TouchableOpacity>
       </View>
     </>

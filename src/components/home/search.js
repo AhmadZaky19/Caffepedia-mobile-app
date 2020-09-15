@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image, TextInput} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {searchProductCreator} from '../../redux/actions/action';
 

@@ -13,7 +13,7 @@ const CartHeader = ({navigation}) => {
         style={{
           flexDirection: 'row',
           paddingVertical: 10,
-          backgroundColor: '#4abdac',
+          backgroundColor: '#90ee90',
         }}>
         <TouchableOpacity
           onPress={() => {
@@ -23,7 +23,7 @@ const CartHeader = ({navigation}) => {
           style={{position: 'relative', marginLeft: 10, flex: 1}}>
           <Image
             source={require('../../assets/icons/back.png')}
-            style={{width: 25, height: 25, position: 'absolute', left: 10}}
+            style={{width: 25, height: 25, position: 'absolute', left: 10, backgroundColor: '#90ee90'}}
           />
         </TouchableOpacity>
         <View
