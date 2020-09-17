@@ -9,9 +9,6 @@ import {
 } from '../../redux/actions/action';
 
 const Cart = () => {
-  useEffect(() => {
-    // useSelector((state) => state.cart.data);
-  }, [listCart]);
   const listCart = useSelector((state) => state.cart.data);
   const dispatch = useDispatch();
 
@@ -33,10 +30,7 @@ const Cart = () => {
   };
 
   const deleteCart = (id) => {
-    const index = listCart.findIndex((item) => {
-      return item.id_product === id;
-    });
-    dispatch(deleteCartCreator(index));
+    dispatch(deleteCartCreator(id));
   };
 
   return (
@@ -78,7 +72,7 @@ const Cart = () => {
                       <View
                         style={{
                           borderBottomWidth: 1,
-                          borderColor: 'green',
+                          borderColor: '#90ee90',
                           textDecorationLine: 'underLine',
                           paddingHorizontal: 5,
                         }}>
@@ -96,7 +90,7 @@ const Cart = () => {
                         onPress={() => handlePlus(item.id_product)}>
                         <Image
                           source={require('../../assets/icons/plus.png')}
-                          style={{width: 25, height: 25}}
+                          style={{width: 35, height: 25}}
                         />
                       </TouchableOpacity>
                     </View>

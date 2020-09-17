@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Image, Text, TouchableOpacity, TextInput} from 'react-native';
-import {Button} from 'native-base';
 import {useDispatch} from 'react-redux';
 
 import {clearProductCreator} from '../../redux/actions/action';

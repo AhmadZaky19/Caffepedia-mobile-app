@@ -23,8 +23,7 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         isPending: false,
       };
     case actionType.getAllProduct + '_FULFILLED':
-      let newData = [...prevState.data];
-      payload.data.data.map((item) => {
+      let newsData = payload.data.data.map((item) => {
         const dataProduct = {
           id_product: item.id_product,
           img_product: item.img_product,
@@ -33,14 +32,14 @@ const productReducer = (prevState = initialState, {type, payload}) => {
           price_product: item.price_product,
           checked: false,
         };
-        return (newData = newData.concat(dataProduct));
+        return dataProduct;
       });
 
       return {
         ...prevState,
         isFulfilled: true,
         isPending: false,
-        data: newData,
+        data: newsData,
         isRejected: false,
       };
     case actionType.searchProduct + '_PENDING':

@@ -9,10 +9,10 @@ const Register = ({navigation}) => {
   const dispatch = useDispatch();
   const login = useSelector((state) => state.auth.isLogin);
   const auth = useSelector((state) => state.auth.data);
-  const [form, setform] = useState({name: null, email: null, password: null});
+  const [form, setform] = useState({username: null, email: null, password: null});
 
   const handleSubmit = () => {
-    dispatch(authRegisterCreator(form.name, form.email, form.password));
+    dispatch(authRegisterCreator(form.username, form.email, form.password));
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Register = ({navigation}) => {
               paddingLeft: 50,
               paddingRight: 20,
             }}
-            onChangeText={(Text) => setform({...form, name: Text})}
+            onChangeText={(Text) => setform({...form, username: Text})}
           />
         </View>
         <View style={{position: 'relative', marginTop: 20}}>
@@ -92,7 +92,7 @@ const Register = ({navigation}) => {
         <Text style={{fontSize: 16}}>Already have an account?</Text>
         <TouchableOpacity>
           <Text
-            style={{fontSize: 16, fontWeight: 'bold', color: '#4abdac'}}
+            style={{fontSize: 16, fontWeight: 'bold', color: '#dc143c'}}
             onPress={() => navigation.navigate('login')}>
             {' '}
             Login

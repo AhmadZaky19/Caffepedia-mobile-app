@@ -9,7 +9,6 @@ import {
 import actionType from './actionType';
 
 export const getAllProductCreator = () => {
-  console.log(getAllProduct());
   return {
     type: actionType.getAllProduct,
     payload: getAllProduct(),
@@ -24,7 +23,7 @@ export const clearProductCreator = () => {
 
 export const searchProductCreator = (name, by) => {
   return {
-    type: actionType.getAllProduct,
+    type: actionType.searchProduct,
     payload: searchProduct(name, by),
   };
 };

@@ -18,7 +18,7 @@ const BottomNav = ({navigation}) => {
         }}>
         <TouchableOpacity
           onPress={() => {
-            dispatch(clearProductCreator());
+            // dispatch(clearProductCreator());
             navigation.navigate('home');
           }}
           style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

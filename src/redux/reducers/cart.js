@@ -12,10 +12,12 @@ const cartReducer = (state = intialState, {type, payload}) => {
         data: [...state.data, payload],
       };
     case actionType.deleteCart:
-      state.data.splice(payload, 1);
+      let newData = state.data.filter((item) => {
+        return item.id_product !== payload;
+      })
       return {
         ...state,
-        data: state.data,
+        data: newData,
       };
     case actionType.deleteAllCart:
       return {

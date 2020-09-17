@@ -13,7 +13,7 @@ const Login = ({navigation}) => {
   const [form, setForm] = useState({email: null, password: null});
 
   const handleSubmit = () => {
-    dispatch(authLoginCreator(form.email, form.password));
+    dispatch(authLoginCreator(form.username, form.password));
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Login = ({navigation}) => {
         <View style={{position: 'relative'}}>
           <TextInput
             placeholder="Username"
-            name="email"
+            name="username"
             style={{
               borderWidth: 1,
               borderColor: '#e8e8e8',
@@ -40,7 +40,7 @@ const Login = ({navigation}) => {
               paddingLeft: 50,
               paddingRight: 20,
             }}
-            onChangeText={(Text) => setForm({...form, email: Text})}
+            onChangeText={(Text) => setForm({...form, username: Text})}
           />
         </View>
         <View style={{position: 'relative', marginTop: 20}}>
@@ -78,7 +78,7 @@ const Login = ({navigation}) => {
         <Text style={{fontSize: 16}}>Don't have an account?</Text>
         <TouchableOpacity>
           <Text
-            style={{fontSize: 16, fontWeight: 'bold', color: '#4abdac'}}
+            style={{fontSize: 16, fontWeight: 'bold', color: '#dc143c'}}
             onPress={() => navigation.navigate('register')}>
             {' '}
             Register

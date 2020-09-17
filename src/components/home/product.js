@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import {Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
-import {Card, CardItem, StyleProvider} from 'native-base';
+import {Card, CardItem} from 'native-base';
 import {useSelector, useDispatch} from 'react-redux';
 import {addToCartCreator, plusQtyCreator} from '../../redux/actions/action';
 
@@ -37,7 +37,11 @@ const Product = ({navigation}) => {
             justifyContent: 'space-evenly',
             flexWrap: 'wrap',
           }}>
-          {listProduct.length ? (
+          {listProduct === undefined ? (
+            <Text style={{fontSize: 18, fontWeight: 'bold', marginTop: 20}}>
+              Menu not found!
+            </Text>
+          ) : listProduct.length ? (
             <Fragment>
               {listProduct.map((item, index) => {
                 return (
@@ -58,7 +62,7 @@ const Product = ({navigation}) => {
                           source={{
                             uri: item.img_product,
                           }}
-                          style={{height: 100, width: null, flex: 1, borderWidth: 1, borderRadius: 20}}
+                          style={{height: 100, width: null, flex: 1}}
                         />
                       </CardItem>
                       <CardItem style={{justifyContent: 'center'}}>
