@@ -16,7 +16,7 @@ export const getAllCategory = () => {
 };
 
 export const searchProduct = (name, by) => {
-  const URI = `http://192.168.1.5:8000/search?name=${name}&by=${by}`;
+  const URI = `http://192.168.1.5:8000/search?name_product=${name}`;
   return Axios.get(URI);
 };
 

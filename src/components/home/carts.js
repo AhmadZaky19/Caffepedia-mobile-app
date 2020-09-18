@@ -66,7 +66,7 @@ const Cart = () => {
                         onPress={() => handleMinus(item.id_product)}>
                         <Image
                           source={require('../../assets/icons/minus.png')}
-                          style={{width: 35, height: 20}}
+                          style={{width: 35, height: 35}}
                         />
                       </TouchableOpacity>
                       <View
@@ -90,7 +90,7 @@ const Cart = () => {
                         onPress={() => handlePlus(item.id_product)}>
                         <Image
                           source={require('../../assets/icons/plus.png')}
-                          style={{width: 35, height: 25}}
+                          style={{width: 25, height: 25}}
                         />
                       </TouchableOpacity>
                     </View>
