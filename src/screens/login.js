@@ -22,6 +22,12 @@ const Login = ({navigation}) => {
     }
   }, [auth]);
 
+  useEffect(() => {
+    if (login === true) {
+      return navigation.navigate('home');
+    }
+  }, []);
+
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{fontWeight: 'bold', fontSize: 25}}>Login</Text>

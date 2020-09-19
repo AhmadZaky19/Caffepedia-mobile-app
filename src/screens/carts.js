@@ -1,9 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import BottomNav from '../components/home/bottomNav';
-import CartHeader from '../components/home/cartHeader';
-import Cart from '../components/home/carts';
+import BottomNav from '../components/customer/bottomNav';
+import CartHeader from '../components/customer/cartHeader';
+import Cart from '../components/customer/carts';
 
 const Carts = ({navigation}) => {
   return (

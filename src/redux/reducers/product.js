@@ -2,6 +2,7 @@ import actionType from '../actions/actionType';
 
 let initialState = {
   data: [],
+  editProduct: [],
   error: '',
   isPending: false,
   isFulfilled: false,
@@ -43,39 +44,45 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         isRejected: false,
       };
 
-      case actionType.getMoreProduct + '_PENDING':
-        return {
-          ...prevState,
-          isPending: true,
+    case actionType.getMoreProduct + '_PENDING':
+      return {
+        ...prevState,
+        isPending: true,
+      };
+    case actionType.getMoreProduct + '_REJECTED':
+      return {
+        ...prevState,
+        isRejected: true,
+        data: payload,
+        isPending: false,
+      };
+    case actionType.getMoreProduct + '_FULFILLED':
+      let newerData = payload.data.data.map((item) => {
+        const dataProduct = {
+          id_product: item.id_product,
+          img_product: item.img_product,
+          name_category: item.name_category,
+          name_product: item.name_product,
+          price_product: item.price_product,
+          checked: false,
         };
-      case actionType.getMoreProduct + '_REJECTED':
-        return {
-          ...prevState,
-          isRejected: true,
-          data: payload,
-          isPending: false,
-        };
-      case actionType.getMoreProduct + '_FULFILLED':
-        let newerData = payload.data.data.map((item) => {
-          const dataProduct = {
-            id_product: item.id_product,
-            img_product: item.img_product,
-            name_category: item.name_category,
-            name_product: item.name_product,
-            price_product: item.price_product,
-            checked: false,
-          };
-          return dataProduct;
-        });
-        const arr = [...prevState.data];
-        const newArr = arr.concat(newerData);
-        return {
-          ...prevState,
-          isFulfilled: true,
-          isPending: false,
-          data: newArr,
-          isRejected: false,
-        };
+        return dataProduct;
+      });
+      const arr = [...prevState.data];
+      const newArr = arr.concat(newerData);
+      return {
+        ...prevState,
+        isFulfilled: true,
+        isPending: false,
+        data: newArr,
+        isRejected: false,
+      };
+
+    case actionType.editProduct:
+      return {
+        ...prevState,
+        editProduct: payload,
+      };
 
     case actionType.searchProduct + '_PENDING':
       return {
@@ -118,7 +125,7 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         ...prevState,
         data: arrData,
       };
-      
+
     case actionType.clearProduct:
       return {
         ...prevState,

@@ -16,6 +16,8 @@ const actionType = {
   getAllTransaction: 'GET_ALL_TRANSACTION',
   addTransaction: 'ADD_TRANSACTION',
   logout: 'AUTH_LOGOUT',
+  editProduct: 'EDIT_PRODUCT',
+  deleteProduct: 'DELETE_PRODUCT',
 };
 
 export default actionType;

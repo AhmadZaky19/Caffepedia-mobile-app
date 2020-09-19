@@ -3,14 +3,16 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import {Thumbnail, Button} from 'native-base';
 import {useDispatch} from 'react-redux';
 import Modal from 'react-native-modal';
+import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 
 import {logoutCreator} from '../redux/actions/action';
 
-import BottomNav from '../components/home/bottomNav';
+// import BottomNav from '../components/customer/bottomNav';
 
 const User = ({navigation}) => {
   const dispatch = useDispatch();
   const [isModalVisible, setModalVisible] = useState(false);
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -19,9 +21,9 @@ const User = ({navigation}) => {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#90ee90',
-          borderBottomRightRadius: 20,
-          borderBottomLeftRadius: 20,
+          backgroundColor: '#4abdac',
+          borderBottomRightRadius: 50,
+          borderBottomLeftRadius: 50,
           position: 'relative',
           justifyContent: 'flex-end',
           alignItems: 'center',
@@ -39,12 +41,15 @@ const User = ({navigation}) => {
       </View>
       <View
         style={{
-          flex: 2,
+          flex: 1,
           alignItems: 'center',
         }}>
         <Text style={{marginTop: 80, fontWeight: 'bold', fontSize: 20}}>
           Ahmad Zaky
         </Text>
+      </View>
+      <View style={{flex: 1, alignItems: 'center'}}>
+        <Icon name="user-edit" size={45} />
       </View>
       <View style={{paddingHorizontal: 25, paddingBottom: 30}}>
         <TouchableOpacity>
@@ -61,6 +66,7 @@ const User = ({navigation}) => {
           </Button>
         </TouchableOpacity>
       </View>
+
       <View>
         <Modal
           isVisible={isModalVisible}
@@ -75,9 +81,7 @@ const User = ({navigation}) => {
               borderRadius: 4,
               borderColor: 'rgba(0, 0, 0, 0.1)',
             }}>
-            <Text style={{fontSize: 20, marginBottom: 12}}>
-              Logout ?
-            </Text>
+            <Text style={{fontSize: 20, marginBottom: 12}}>Logout ?</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -91,7 +95,7 @@ const User = ({navigation}) => {
                     success
                     onPress={() => {
                       dispatch(logoutCreator());
-                      navigation.navigate('login');
+                      navigation.navigate('Login');
                       toggleModal();
                     }}>
                     <Text style={{fontWeight: 'bold', color: 'white'}}>
@@ -116,7 +120,6 @@ const User = ({navigation}) => {
           </View>
         </Modal>
       </View>
-      <BottomNav navigation={navigation} />
     </View>
   );
 };

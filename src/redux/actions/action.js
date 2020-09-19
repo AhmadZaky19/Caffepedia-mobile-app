@@ -36,6 +36,13 @@ export const searchProductCreator = (name, by) => {
   };
 };
 
+export const editProductCreator = (data) => {
+  return {
+    type: actionType.editProduct,
+    payload: data,
+  };
+};
+
 export const getAllCategoryCreator = () => {
   return {
     type: actionType.getAllCategory,

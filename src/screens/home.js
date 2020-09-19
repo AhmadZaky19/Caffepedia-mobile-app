@@ -5,9 +5,9 @@ import {View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {getAllProductCreator} from '../redux/actions/action';
 
-import BottomNav from '../components/home/bottomNav';
-import Search from '../components/home/search';
-import Product from '../components/home/product';
+import BottomNav from '../components/customer/bottomNav';
+import Search from '../components/customer/search';
+import Product from '../components/customer/product';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
