@@ -1,5 +1,6 @@
 import {
   getAllProduct,
+  getMoreProduct,
   searchProduct,
   getAllCategory,
   authLogin,
@@ -12,6 +13,13 @@ export const getAllProductCreator = () => {
   return {
     type: actionType.getAllProduct,
     payload: getAllProduct(),
+  };
+};
+
+export const getMoreProductCreator = (page) => {
+  return {
+    type: actionType.getMoreProduct,
+    payload: getMoreProduct(page),
   };
 };
 

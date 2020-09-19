@@ -23,7 +23,7 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         isPending: false,
       };
     case actionType.getAllProduct + '_FULFILLED':
-      let newsData = payload.data.data.map((item) => {
+      let newData = payload.data.data.map((item) => {
         const dataProduct = {
           id_product: item.id_product,
           img_product: item.img_product,
@@ -39,9 +39,44 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         ...prevState,
         isFulfilled: true,
         isPending: false,
-        data: newsData,
+        data: newData,
         isRejected: false,
       };
+
+      case actionType.getMoreProduct + '_PENDING':
+        return {
+          ...prevState,
+          isPending: true,
+        };
+      case actionType.getMoreProduct + '_REJECTED':
+        return {
+          ...prevState,
+          isRejected: true,
+          data: payload,
+          isPending: false,
+        };
+      case actionType.getMoreProduct + '_FULFILLED':
+        let newerData = payload.data.data.map((item) => {
+          const dataProduct = {
+            id_product: item.id_product,
+            img_product: item.img_product,
+            name_category: item.name_category,
+            name_product: item.name_product,
+            price_product: item.price_product,
+            checked: false,
+          };
+          return dataProduct;
+        });
+        const arr = [...prevState.data];
+        const newArr = arr.concat(newerData);
+        return {
+          ...prevState,
+          isFulfilled: true,
+          isPending: false,
+          data: newArr,
+          isRejected: false,
+        };
+
     case actionType.searchProduct + '_PENDING':
       return {
         ...prevState,
@@ -62,6 +97,7 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         data: payload.data.data,
         isRejected: false,
       };
+
     case actionType.checkedProduct:
       let arrData = [...prevState.data];
       arrData[payload] = {
@@ -72,6 +108,7 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         ...prevState,
         data: arrData,
       };
+
     case actionType.unCheckedProduct:
       arrData[payload] = {
         ...arrData[payload],
@@ -81,6 +118,7 @@ const productReducer = (prevState = initialState, {type, payload}) => {
         ...prevState,
         data: arrData,
       };
+      
     case actionType.clearProduct:
       return {
         ...prevState,

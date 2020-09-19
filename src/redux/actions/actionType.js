@@ -1,5 +1,6 @@
 const actionType = {
   getAllProduct: 'GET_ALL_PRODUCT',
+  getMoreProduct: 'GET_MORE_PRODUCT',
   searchProduct: 'SEARCH_PRODUCT',
   addToCart: 'ADD_TO_CART',
   deleteCart: 'DELETE_CART',
