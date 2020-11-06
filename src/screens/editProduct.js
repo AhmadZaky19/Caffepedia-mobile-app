@@ -12,17 +12,17 @@ const EditProduct = ({navigation}) => {
   const data = useSelector((state) => state.product.editProduct);
   console.log(data);
   const [form, setform] = useState({
-    nameProduct: data.nameProduct,
-    priceProduct: data.priceProduct,
-    category: data.category,
-    image: data.imgProduct,
+    nameProduct: data.name_Product,
+    priceProduct: data.price_Product,
+    category: data.id_category,
+    image: data.img_Product,
     id_product: data.id_product,
   });
 
   const chooseImage = () => {
     const options = {
       title: 'Select Avatar',
-      customButtons: [{name: 'fb', title: 'Choose Photo from Facebook'}],
+      customButtons: [{name: 'photo', title: 'Choose Photo'}],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -30,7 +30,7 @@ const EditProduct = ({navigation}) => {
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        setform({...form, image: data.imgProduct});
+        setform({...form, image: data.img_Product});
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
@@ -44,9 +44,9 @@ const EditProduct = ({navigation}) => {
 
   const updateProduct = () => {
     let formData = new FormData();
-    formData.append('name_product', form.nameProduct);
-    formData.append('price_product', form.priceProduct);
-    formData.append('id_category', form.category);
+    formData.append('name_product', form.name_Product);
+    formData.append('price_product', form.price_Product);
+    formData.append('id_category', form.id_category);
     formData.append('id_product', parseInt(form.id_product));
     if (form.image.type) {
       formData.append('image', {
@@ -118,16 +118,16 @@ const EditProduct = ({navigation}) => {
               <Item stackedLabel>
                 <Label style={{fontWeight: 'bold'}}>Name Product</Label>
                 <Input
-                  value={form.nameProduct}
-                  onChangeText={(Text) => setform({...form, nameProduct: Text})}
+                  value={form.name_Product}
+                  onChangeText={(Text) => setform({...form, name_Product: Text})}
                 />
               </Item>
               <Item stackedLabel>
                 <Label style={{fontWeight: 'bold'}}>Price Product</Label>
                 <Input
-                  value={form.priceProduct.toString()}
+                  value={form.price_Product.toString()}
                   onChangeText={(Text) =>
-                    setform({...form, priceProduct: Text})
+                    setform({...form, price_Product: Text})
                   }
                 />
               </Item>
@@ -135,10 +135,10 @@ const EditProduct = ({navigation}) => {
               <Item stackedLabel>
                 <Label style={{fontWeight: 'bold'}}>Category</Label>
                 <Picker
-                  selectedValue={form.category}
+                  selectedValue={form.id_category}
                   style={{height: 50, width: 390}}
                   onValueChange={(itemValue, itemIndex) => {
-                    setform({...form, category: itemValue});
+                    setform({...form, id_category: itemValue});
                   }}>
                   <Picker.Item label="Food" value={2} />
                   <Picker.Item label="Drink" value={1} />

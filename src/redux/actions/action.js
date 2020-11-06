@@ -6,8 +6,17 @@ import {
   authLogin,
   authRegister,
   getAllTransaction,
+  getDataUser,
+  filterProduct,
 } from '../../utils/http';
 import actionType from './actionType';
+
+export const getDataUserCreator = (id) => {
+  return {
+    type: actionType.getDataUser,
+    payload: getDataUser(id),
+  };
+};
 
 export const getAllProductCreator = () => {
   return {
@@ -26,6 +35,13 @@ export const getMoreProductCreator = (page) => {
 export const clearProductCreator = () => {
   return {
     type: actionType.clearProduct,
+  };
+};
+
+export const filterProductCreator = (by, order) => {
+  return {
+    type: actionType.filterProduct,
+    payload: filterProduct(by, order),
   };
 };
 

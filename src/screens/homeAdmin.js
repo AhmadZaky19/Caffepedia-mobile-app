@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
-import ProductAdmin from '../components/admin/product';
+import ProductAdmin from '../components/admin/productAdmin';
 import Search from '../components/customer/search';
 
 const HomeAdmin = ({navigation}) => {

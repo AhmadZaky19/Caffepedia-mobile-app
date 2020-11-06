@@ -17,7 +17,7 @@ const Home = ({navigation}) => {
   return (
     <View style={{flex: 1}}>
       <View style={{flex: 1}}>
-        <Search />
+        <Search navigation={navigation} />
         <Product navigation={navigation} />
       </View>
       <BottomNav navigation={navigation} />

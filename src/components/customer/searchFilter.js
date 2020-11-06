@@ -4,20 +4,16 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Button} from 'native-base';
 import {Picker} from '@react-native-community/picker';
 
-import {
-  searchProductCreator,
-  filterProductCreator,
-} from '../../redux/actions/action';
+import {searchProductCreator, filterProductCreator} from '../../redux/actions/action';
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import Modal from 'react-native-modal';
 
-const Search = ({navigation}) => {
+const SearchFilter = ({navigation}) => {
   const dispatch = useDispatch();
   const [product, setproduct] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const [filter, setFilter] = useState(1);
   const filterProducts = useSelector((state) => state.product.filterProduct);
-  console.log(filterProducts);
 
   const filterProduct = () => {
     let data = null;
@@ -55,8 +51,6 @@ const Search = ({navigation}) => {
     }
 
     dispatch(filterProductCreator(data.by, data.order));
-    toggleModal();
-    navigation.navigate('filterProduct');
   };
 
   const toggleModal = () => {
@@ -68,11 +62,28 @@ const Search = ({navigation}) => {
         style={{
           flexDirection: 'row',
           paddingVertical: 10,
-          backgroundColor: '#90ee90',
+          backgroundColor: '#4abdac',
         }}>
+        <View style={{width: 50, justifyContent: 'center'}}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('HomeApp');
+            }}
+            style={{
+              marginLeft: 5,
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../../assets/icons/back.png')}
+              style={{width: 25, height: 25, position: 'absolute', left: 10}}
+            />
+          </TouchableOpacity>
+        </View>
         <View style={{position: 'relative', flex: 1, marginLeft: 10}}>
           <TextInput
-            placeholder="I want ..."
+            placeholder="What i want ?"
             style={{
               borderWidth: 1,
               borderColor: '#003333',
@@ -106,13 +117,15 @@ const Search = ({navigation}) => {
             paddingHorizontal: 15,
           }}>
           <TouchableOpacity onPress={toggleModal}>
-            <Icon name="filter" size={30} />
+            <Icon name="filter" size={25} />
           </TouchableOpacity>
         </View>
       </View>
       <View>
         <Modal
-          isVisible={isModalVisible}>
+          isVisible={isModalVisible}
+          animationIn="slideInLeft"
+          animationOut="slideOutRight">
           <View
             style={{
               backgroundColor: 'white',
@@ -158,6 +171,7 @@ const Search = ({navigation}) => {
                       success
                       onPress={() => {
                         filterProduct();
+                        toggleModal();
                       }}>
                       <Text style={{fontWeight: 'bold', color: 'white'}}>
                         Filter
@@ -188,4 +202,4 @@ const Search = ({navigation}) => {
   );
 };
 
-export default Search;
+export default SearchFilter;

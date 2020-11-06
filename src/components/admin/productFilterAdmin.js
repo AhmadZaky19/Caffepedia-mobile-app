@@ -19,8 +19,8 @@ import {
 } from '../../redux/actions/action';
 import Modal from 'react-native-modal';
 
-const ListProductAdmin = ({navigation}) => {
-  const listProduct = useSelector((state) => state.product.data);
+const ListProductAdminFilter = ({navigation}) => {
+  const listProduct = useSelector((state) => state.product.filterProduct);
 
   const [page, setPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,9 +49,10 @@ const ListProductAdmin = ({navigation}) => {
   };
 
   const deleteProduct = () => {
-    const URI = `http://192.168.43.116:8000/deleteproduct/${product.id_product}`;
+    const URI = `http://192.168.1.5:8000/deleteproduct/${product.id_product}`;
     return Axios.delete(URI).then((res) => {
       dispatch(getAllProductCreator());
+      navigation.navigate('homeAdmin');
     });
   };
 
@@ -65,15 +66,15 @@ const ListProductAdmin = ({navigation}) => {
               id_product: item.id_product,
               nameProduct: item.name_product,
               priceProduct: item.price_product,
-              category: item.category_id,
-              imgProduct: item.image,
+              category: item.id_category,
+              imgProduct: item.img_product,
             });
           }}>
           <Card style={{width: 180}}>
             <CardItem cardBody>
               <Image
                 source={{
-                  uri: item.image,
+                  uri: item.img_product,
                 }}
                 style={{height: 100, width: null, flex: 1}}
               />
@@ -131,7 +132,7 @@ const ListProductAdmin = ({navigation}) => {
               fontWeight: 'bold',
               marginTop: 20,
             }}>
-            Loading Data ...
+            Loading Data...
           </Text>
         </View>
       )}
@@ -169,9 +170,7 @@ const ListProductAdmin = ({navigation}) => {
                 X
               </Text>
             </Button>
-            <Text style={{fontSize: 20, marginBottom: 12}}>
-              Logout ?
-            </Text>
+            <Text style={{fontSize: 20, marginBottom: 12}}>Action Product ?</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -186,7 +185,7 @@ const ListProductAdmin = ({navigation}) => {
                     onPress={() => {
                       dispatch(dataEditProductCreator(product));
                       toggleModal();
-                      navigation.navigate('editProduct');
+                      navigation.navigate('EditProduct');
                     }}>
                     <Text style={{fontWeight: 'bold', color: 'white'}}>
                       Edit
@@ -204,6 +203,7 @@ const ListProductAdmin = ({navigation}) => {
                     onPress={() => {
                       deleteProduct();
                       toggleModal();
+                      navigation.navigate('HomeAdmin');
                     }}>
                     <Text style={{fontWeight: 'bold', color: 'white'}}>
                       Delete
@@ -219,4 +219,4 @@ const ListProductAdmin = ({navigation}) => {
   );
 };
 
-export default ListProductAdmin;
+export default ListProductAdminFilter;

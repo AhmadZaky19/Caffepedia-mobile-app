@@ -10,7 +10,9 @@ const Login = ({navigation}) => {
   const login = useSelector((state) => state.auth.isLogin);
   const auth = useSelector((state) => state.auth.data);
 
-  const [form, setForm] = useState({email: null, password: null});
+  const isLogin = true;
+
+  const [form, setForm] = useState({username: null, password: null});
 
   const handleSubmit = () => {
     dispatch(authLoginCreator(form.username, form.password));
@@ -18,13 +20,14 @@ const Login = ({navigation}) => {
 
   useEffect(() => {
     if (login) {
-      return navigation.navigate('home');
+      navigation.navigate('home');
+      setForm({...form, username: null, password: null});
     }
   }, [auth]);
 
   useEffect(() => {
     if (login === true) {
-      return navigation.navigate('home');
+      navigation.navigate('home');
     }
   }, []);
 
@@ -34,6 +37,7 @@ const Login = ({navigation}) => {
       <View style={{marginTop: 20}}>
         <View style={{position: 'relative'}}>
           <TextInput
+            value={form.username}
             placeholder="Username"
             name="username"
             style={{
@@ -51,6 +55,7 @@ const Login = ({navigation}) => {
         </View>
         <View style={{position: 'relative', marginTop: 20}}>
           <TextInput
+            value={form.password}
             secureTextEntry
             placeholder="Password"
             style={{
@@ -81,7 +86,7 @@ const Login = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={{flexDirection: 'row', marginTop: 25}}>
-        <Text style={{fontSize: 16}}>Don't have an account?</Text>
+        <Text style={{fontSize: 16}}>Don't have an Account?</Text>
         <TouchableOpacity>
           <Text
             style={{fontSize: 16, fontWeight: 'bold', color: '#dc143c'}}

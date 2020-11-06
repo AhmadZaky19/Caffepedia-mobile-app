@@ -1,5 +1,10 @@
 import Axios from 'axios';
 
+export const getDataUser = (id) => {
+  const URI = `http://192.168.1.5:8000/auth/getdata/${id}`;
+  return Axios.get(URI);
+};
+
 export const getAllProduct = () => {
   const URI = `http://192.168.1.5:8000/pagination?page=1&limit=6`;
   return Axios.get(URI);
@@ -7,6 +12,11 @@ export const getAllProduct = () => {
 
 export const getMoreProduct = (page) => {
   const URI = `http://192.168.1.5:8000/pagination?page=${page}&limit=6`;
+  return Axios.get(URI);
+};
+
+export const filterProduct = (by, order) => {
+  const URI = `http://192.168.1.5:8000/sort?by=${by}&order=${order}`;
   return Axios.get(URI);
 };
 

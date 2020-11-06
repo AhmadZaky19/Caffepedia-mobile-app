@@ -2,6 +2,7 @@ import actionType from '../actions/actionType';
 
 const initialState = {
   data: null,
+  dataUser: null,
   isAdmin: false,
   isLogin: false,
   isPending: false,
@@ -50,16 +51,47 @@ const auth = (state = initialState, {type, payload}) => {
     case actionType.logout:
       return {
         ...state,
-        data: null,
+        data: {},
         isAdmin: false,
         isLogin: false,
         isPending: false,
         isFulfilled: false,
         isRejected: false,
       };
-    default:
-      return state;
-  }
-};
+      case actionType.getDataUser + '_PENDING':
+        return {
+          ...state,
+          isPending: true,
+        };
+      case actionType.getDataUser + '_REJECTED':
+        return {
+          ...state,
+          isRejected: true,
+          data: payload,
+          isPending: false,
+        };
+      case actionType.getDataUser + '_FULFILLED':
+        return {
+          ...state,
+          isFulfilled: true,
+          isPending: false,
+          dataUser: payload.data.data,
+          isRejected: false,
+        };
+      case actionType.logout:
+        return {
+          ...state,
+          data: {},
+          dataUser: {},
+          isAdmin: false,
+          isLogin: false,
+          isPending: false,
+          isFulfilled: false,
+          isRejected: false,
+        };
+      default:
+        return state;
+    }
+  };
 
 export default auth;

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Image, Text, TouchableOpacity, TextInput} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {Button} from 'native-base';
 
 import {clearProductCreator} from '../../redux/actions/action';
 
@@ -16,7 +17,7 @@ const CartHeader = ({navigation}) => {
         }}>
         <TouchableOpacity
           onPress={() => {
-            dispatch(clearProductCreator());
+            // dispatch(clearProductCreator());
             navigation.navigate('home');
           }}
           style={{position: 'relative', marginLeft: 10, flex: 1}}>

@@ -1,4 +1,5 @@
 import React, {Fragment, useState, useEffect} from 'react';
+
 import {
   Text,
   View,
@@ -18,11 +19,12 @@ import {
   getAllProductCreator,
 } from '../../redux/actions/action';
 
-const Product = ({navigation}) => {
-  const listProduct = useSelector((state) => state.product.data);
+const ListProductFilter = ({navigation}) => {
+  const listProduct = useSelector((state) => state.product.filterProduct);
   const listCarts = useSelector((state) => state.cart.data);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [isLoading, setIsLoading] = useState(false);
+  // console.log(listProduct.length);
 
   const dispatch = useDispatch();
 
@@ -67,7 +69,7 @@ const Product = ({navigation}) => {
               item.id_product,
               item.name_product,
               item.price_product,
-              item.img_product,
+              item.image,
             );
             navigation.navigate('carts');
           }}>
@@ -75,7 +77,7 @@ const Product = ({navigation}) => {
             <CardItem cardBody>
               <Image
                 source={{
-                  uri: item.img_product,
+                  uri: item.image,
                 }}
                 style={{height: 100, width: null, flex: 1}}
               />
@@ -133,7 +135,7 @@ const Product = ({navigation}) => {
               fontWeight: 'bold',
               marginTop: 20,
             }}>
-            Loading Data...
+            Loading Data ...
           </Text>
         </View>
       )}
@@ -141,4 +143,4 @@ const Product = ({navigation}) => {
   );
 };
 
-export default Product;
+export default ListProductFilter;

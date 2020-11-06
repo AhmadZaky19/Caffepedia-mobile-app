@@ -18,6 +18,8 @@ const actionType = {
   logout: 'AUTH_LOGOUT',
   editProduct: 'EDIT_PRODUCT',
   deleteProduct: 'DELETE_PRODUCT',
+  getDataUser: 'GET_DATA_USER',
+  filterProduct: 'FILTER_PRODUCT',
 };
 
 export default actionType;

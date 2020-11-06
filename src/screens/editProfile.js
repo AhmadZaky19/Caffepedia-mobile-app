@@ -1,25 +1,26 @@
-import React, {useState} from 'react';
-import {View, Image, Text, TouchableOpacity} from 'react-native';
+import React, {Fragment, useState, useEffect} from 'react';
+import {View, Image, Text, TouchableOpacity, TextInput} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 import ImagePicker from 'react-native-image-picker';
 import {Form, Label, Item, Input, Button} from 'native-base';
 import Axios from 'axios';
-import {useDispatch} from 'react-redux';
-import {getAllProductCreator} from '../redux/actions/action';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAllProductCreator, getDataUserCreator} from '../redux/actions/action';
 
-const AddProduct = ({navigation}) => {
+const EditProfile = ({navigation}) => {
   const dispatch = useDispatch();
+  const authProfile = useSelector((state) => state.auth.dataUser[0]);
+  console.log(authProfile);
   const [form, setform] = useState({
-    nameProduct: null,
-    priceProduct: null,
-    category: 2,
-    image: null,
+    nameUser: authProfile.username,
+    image: authProfile.image,
+    id_user: authProfile.id_user,
   });
 
   const chooseImage = () => {
     const options = {
       title: 'Select Avatar',
-      customButtons: [{name: 'photo', title: 'Choose Photo'}],
+      customButtons: [{name: 'fb', title: 'Choose Photo'}],
       storageOptions: {
         skipBackup: true,
         path: 'images',
@@ -27,7 +28,7 @@ const AddProduct = ({navigation}) => {
     };
     ImagePicker.launchImageLibrary(options, (response) => {
       if (response.didCancel) {
-        console.log('dicancel');
+        setform({...form, image: authProfile.image});
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
@@ -39,17 +40,18 @@ const AddProduct = ({navigation}) => {
     });
   };
 
-  const addProduct = () => {
+  const updateUser = () => {
     let formData = new FormData();
-    formData.append('name_product', form.nameProduct);
-    formData.append('price_product', form.priceProduct);
-    formData.append('id_category', form.category);
-    formData.append('image', {
-      uri: `file://${form.image.path}`,
-      type: form.image.type,
-      name: form.image.fileName,
-      size: form.image.fileSize,
-    });
+    formData.append('username', form.nameUser);
+    formData.append('id_user', parseInt(form.id_user));
+    if (form.image.type) {
+      formData.append('image', {
+        uri: `file://${form.image.path}`,
+        type: form.image.type,
+        name: form.image.fileName,
+        size: form.image.fileSize,
+      });
+    }
 
     const configHeader = {
       headers: {
@@ -61,17 +63,17 @@ const AddProduct = ({navigation}) => {
       },
     };
 
-    const URL = `http://192.168.1.5:8000/addproduct`;
-    Axios.post(URL, formData, configHeader)
+    const URL = `http://192.168.1.5:8000/auth/edit`;
+    Axios.patch(URL, formData, configHeader)
       .then((res) => {
+        console.log('response', res);
         setform({
-          nameProduct: null,
-          priceProduct: null,
-          category: 2,
+          nameUser: null,
           image: null,
+          id_user: null,
         });
-        dispatch(getAllProductCreator());
-        navigation.navigate('homeAdmin');
+        dispatch(getDataUserCreator(form.id_user));
+        navigation.navigate('Account');
       })
       .catch((err) => console.log(err));
   };
@@ -102,42 +104,21 @@ const AddProduct = ({navigation}) => {
                 alignContent: 'center',
                 flex: 1,
               }}>
-              <Text style={{fontWeight: 'bold', fontSize: 18}}>Add Product</Text>
+              <Text style={{fontWeight: 'bold', fontSize: 18}}>
+                Edit Profile
+              </Text>
             </View>
           </View>
           <View style={{marginTop: 20}}>
             <Form>
               <Item stackedLabel>
-                <Label style={{fontWeight: 'bold'}}>Name Product</Label>
+                <Label style={{fontWeight: 'bold'}}>Name</Label>
                 <Input
-                  value={form.nameProduct}
-                  onChangeText={(Text) => setform({...form, nameProduct: Text})}
-                />
-              </Item>
-              <Item stackedLabel>
-                <Label style={{fontWeight: 'bold'}}>Price Product</Label>
-                <Input
-                  value={form.priceProduct}
-                  onChangeText={(Text) =>
-                    setform({...form, priceProduct: Text})
-                  }
+                  value={form.nameUser}
+                  onChangeText={(Text) => setform({...form, nameUser: Text})}
                 />
               </Item>
 
-              <Item stackedLabel>
-                <Label style={{fontWeight: 'bold'}}>Category</Label>
-                <Picker
-                  selectedValue={form.category}
-                  style={{height: 50, width: 390}}
-                  onValueChange={(itemValue, itemIndex) => {
-                    console.log(itemValue);
-                    console.log(itemIndex);
-                    setform({...form, category: itemValue});
-                  }}>
-                  <Picker.Item label="Food" value="2" />
-                  <Picker.Item label="Drink" value="1" />
-                </Picker>
-              </Item>
               <View
                 style={{
                   marginHorizontal: 20,
@@ -164,10 +145,17 @@ const AddProduct = ({navigation}) => {
                     alignContent: 'center',
                   }}>
                   {form.image ? (
-                    <Image
-                      source={form.image}
-                      style={{width: 150, height: 100, marginTop: 100}}
-                    />
+                    form.image.type ? (
+                      <Image
+                        source={form.image}
+                        style={{width: 150, height: 100, marginTop: 100}}
+                      />
+                    ) : (
+                      <Image
+                        source={{uri: form.image}}
+                        style={{width: 150, height: 100, marginTop: 100}}
+                      />
+                    )
                   ) : (
                     <Text
                       style={{fontWeight: 'bold', fontSize: 20, marginTop: 35}}>
@@ -177,9 +165,9 @@ const AddProduct = ({navigation}) => {
                 </View>
               </View>
               <View style={{flex: 1, marginTop: 100, paddingHorizontal: 25}}>
-                <Button block rounded success onPress={() => addProduct()}>
+                <Button block rounded success onPress={() => updateUser()}>
                   <Text style={{fontWeight: 'bold', color: 'white'}}>
-                    Add Data
+                    Update Data User
                   </Text>
                 </Button>
               </View>
@@ -191,4 +179,4 @@ const AddProduct = ({navigation}) => {
   );
 };
 
-export default AddProduct;
+export default EditProfile;
