@@ -1,8 +1,19 @@
-import actionType from '../actions/actionType';
+import {
+  loginAction,
+  pending,
+  rejected,
+  fulfilled,
+  logoutAction,
+  registerAction,
+  updateProfileAction,
+  getDataUserAction,
+} from '../actions/actionType';
 
 const initialState = {
   data: null,
-  dataUser: null,
+  status: 190,
+  dataUser: [],
+  dataUpdate: [],
   isAdmin: false,
   isLogin: false,
   isPending: false,
@@ -12,23 +23,23 @@ const initialState = {
 
 const auth = (state = initialState, {type, payload}) => {
   switch (type) {
-    case actionType.authLogin + '_PENDING':
+    case loginAction + pending:
       return {
         ...state,
         isPending: true,
       };
-    case actionType.authLogin + '_REJECTED':
+    case loginAction + rejected:
       return {
         ...state,
         isRejected: true,
         data: payload,
         isPending: false,
       };
-    case actionType.authLogin + '_FULFILLED':
+    case loginAction + fulfilled:
       let admin = null;
       let login = null;
-      if (payload.data.success) {
-        if (payload.data.data.level_id === 2) {
+      if (payload.data.isSuccess) {
+        if (payload.data.data.id_level === 2) {
           admin = true;
           login = true;
         } else {
@@ -43,55 +54,99 @@ const auth = (state = initialState, {type, payload}) => {
         ...state,
         isFulfilled: true,
         isPending: false,
-        data: payload.data,
+        data: payload.data.data,
         isRejected: false,
         isAdmin: admin,
         isLogin: login,
       };
-    case actionType.logout:
+    case logoutAction:
       return {
         ...state,
-        data: {},
+        data: null,
+        dataUser: null,
         isAdmin: false,
         isLogin: false,
         isPending: false,
         isFulfilled: false,
         isRejected: false,
       };
-      case actionType.getDataUser + '_PENDING':
-        return {
-          ...state,
-          isPending: true,
-        };
-      case actionType.getDataUser + '_REJECTED':
-        return {
-          ...state,
-          isRejected: true,
-          data: payload,
-          isPending: false,
-        };
-      case actionType.getDataUser + '_FULFILLED':
-        return {
-          ...state,
-          isFulfilled: true,
-          isPending: false,
-          dataUser: payload.data.data,
-          isRejected: false,
-        };
-      case actionType.logout:
-        return {
-          ...state,
-          data: {},
-          dataUser: {},
-          isAdmin: false,
-          isLogin: false,
-          isPending: false,
-          isFulfilled: false,
-          isRejected: false,
-        };
-      default:
-        return state;
-    }
-  };
+    case registerAction + pending:
+      return {
+        ...state,
+        isPending: true,
+      };
+    case registerAction + rejected:
+      return {
+        ...state,
+        isRejected: true,
+        data: payload,
+        isPending: false,
+      };
+    case registerAction + fulfilled:
+      if (payload.data.isSuccess) {
+        if (payload.data.data.id_level === 2) {
+          admin = true;
+          login = true;
+        } else {
+          admin = false;
+          login = true;
+        }
+      } else {
+        admin = false;
+        login = false;
+      }
+      return {
+        ...state,
+        isFulfilled: true,
+        isPending: false,
+        data: payload.data.data,
+        isRejected: false,
+        isAdmin: admin,
+        isLogin: login,
+      };
+    case updateProfileAction + pending:
+      return {
+        ...state,
+        isPending: true,
+        isFulfilled: false,
+      };
+    case updateProfileAction + rejected:
+      return {
+        ...state,
+        isRejected: true,
+        dataUpdate: payload,
+        isPending: false,
+      };
+    case updateProfileAction + fulfilled:
+      return {
+        ...state,
+        isFulfilled: true,
+        dataUpdate: payload.data.data,
+        isPending: false,
+        status: 200,
+      };
+    case getDataUserAction + pending:
+      return {
+        ...state,
+        isPending: true,
+      };
+    case getDataUserAction + rejected:
+      return {
+        ...state,
+        isRejected: true,
+        dataUser: payload,
+        isPending: false,
+      };
+    case getDataUserAction + fulfilled:
+      return {
+        ...state,
+        isFulfilled: true,
+        dataUser: payload.data.data,
+        isPending: false,
+      };
+    default:
+      return state;
+  }
+};
 
 export default auth;

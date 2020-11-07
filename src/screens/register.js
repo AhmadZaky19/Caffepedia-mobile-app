@@ -1,105 +1,112 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, Image, TouchableOpacity} from 'react-native';
-import {Button} from 'native-base';
 import {useSelector, useDispatch} from 'react-redux';
-
-import {authRegisterCreator} from '../redux/actions/action';
+import {registerCreator} from '../redux/actions/auth';
+import {
+  Text,
+  View,
+  ImageBackground,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  ScrollView,
+} from 'react-native';
+import style from '../style/login';
+import background from '../image/tiramisu.jpg';
 
 const Register = ({navigation}) => {
+  const {auth} = useSelector((state) => state);
   const dispatch = useDispatch();
-  const login = useSelector((state) => state.auth.isLogin);
-  const auth = useSelector((state) => state.auth.data);
-  const [form, setform] = useState({username: null, email: null, password: null});
+  const [user, setUser] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [msg, setMsg] = useState(null);
+  console.log(user, password);
 
   const handleSubmit = () => {
-    dispatch(authRegisterCreator(form.username, form.email, form.password));
+    if (user === null || password === null) {
+      setMsg('username/password cannot be empty');
+      setTimeout(() => {
+        setMsg(null);
+      }, 3000);
+    } else if (user === '' || password === '') {
+      setMsg('username/password/ cannot be empty');
+      setTimeout(() => {
+        setMsg(null);
+      }, 3000);
+    } else {
+      setMsg(null);
+      dispatch(registerCreator(user, password));
+      if (auth.isLogin === false) {
+        setPassword(null);
+        setUser(null);
+        setMsg(auth.data);
+      }
+    }
   };
 
   useEffect(() => {
-    if (login) {
-      return navigation.navigate('home');
+    if (auth.isLogin) {
+      setPassword(null);
+      setUser(null);
+      setMsg(null);
+      return navigation.navigate('bottomtab');
+    } else if (auth.isLogin === false) {
+      setMsg(auth.data);
+      setTimeout(() => {
+        setMsg(null);
+      }, 4000);
     }
   }, [auth]);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{fontWeight: 'bold', fontSize: 25}}>Register</Text>
-      <View style={{marginTop: 20}}>
-        <View style={{position: 'relative'}}>
-          <TextInput
-            placeholder="Username"
-            style={{
-              borderWidth: 1,
-              borderColor: '#e8e8e8',
-              borderRadius: 25,
-              backgroundColor: 'white',
-              width: 350,
-              fontSize: 18,
-              paddingLeft: 50,
-              paddingRight: 20,
-            }}
-            onChangeText={(Text) => setform({...form, username: Text})}
-          />
+    <ScrollView
+    contentContainerStyle={style.container}
+    showsVerticalScrollIndicator={false}>
+      <ImageBackground source={background} style={style.image}>
+        <View style={style.content}>
+          <ScrollView style={style.form} showsVerticalScrollIndicator={false}>
+            <View style={style.logo}>
+              <Text style={style.login}> CAFEPEDIA</Text>
+            </View>
+            {auth.isPending ? (
+              <ActivityIndicator
+                color="red"
+                style={style.indicator}
+                size="large"
+              />
+            ) : null}
+            {msg === null ? null : (
+              <View style={style.error}>
+                <Text style={style.errText}>{msg}</Text>
+              </View>
+            )}
+            <TextInput
+              placeholder="username"
+              style={style.register}
+              onChangeText={(text) => setUser(text)}
+              value={user}
+            />
+            <TextInput
+              textContentType="password"
+              placeholder="password"
+              secureTextEntry={true}
+              style={style.register}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+            />
+            <TouchableOpacity
+              style={style.btnRegis}
+              onPress={() => handleSubmit()}>
+              <Text style={{color: 'white', fontWeight: 'bold'}}>REGISTER</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={style.regis}
+              onPress={() => navigation.navigate('login')}>
+              <Text style={style.loginRegis}>Have an account? Login</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
-        <View style={{position: 'relative', marginTop: 20}}>
-          <TextInput
-            placeholder="Email"
-            style={{
-              borderWidth: 1,
-              borderColor: '#e8e8e8',
-              borderRadius: 25,
-              backgroundColor: 'white',
-              width: 350,
-              fontSize: 18,
-              paddingLeft: 50,
-              paddingRight: 20,
-            }}
-            onChangeText={(Text) => setform({...form, email: Text})}
-          />
-        </View>
-        <View style={{position: 'relative', marginTop: 20}}>
-          <TextInput
-            secureTextEntry
-            placeholder="Password"
-            style={{
-              borderWidth: 1,
-              borderColor: '#e8e8e8',
-              borderRadius: 25,
-              backgroundColor: 'white',
-              width: 350,
-              fontSize: 18,
-              paddingLeft: 50,
-              paddingRight: 20,
-            }}
-            onChangeText={(Text) => setform({...form, password: Text})}
-          />
-        </View>
-      </View>
-      <View style={{width: 350, marginTop: 25}}>
-        <TouchableOpacity>
-          <Button
-            block
-            rounded
-            style={{backgroundColor: '#90ee90'}}
-            onPress={handleSubmit}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: 'white'}}>
-              Register Account
-            </Text>
-          </Button>
-        </TouchableOpacity>
-      </View>
-      <View style={{flexDirection: 'row', marginTop: 25}}>
-        <Text style={{fontSize: 16}}>Already have an account?</Text>
-        <TouchableOpacity>
-          <Text
-            style={{fontSize: 16, fontWeight: 'bold', color: '#dc143c'}}
-            onPress={() => navigation.navigate('login')}>
-            {' '}
-            Login
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      </ImageBackground>
+    </ScrollView>
   );
 };
 

@@ -1,182 +1,144 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import {Thumbnail, Button} from 'native-base';
 import {useDispatch, useSelector} from 'react-redux';
-import Modal from 'react-native-modal';
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
+import {View, Text, ScrollView, Image, TouchableOpacity} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
+import {logoutCreator, getDataUserCreator} from '../redux/actions/auth';
+import {cancelCartCreator} from '../redux/actions/menu';
+import {Overlay} from 'react-native-elements';
+import {createStackNavigator} from '@react-navigation/stack';
+import OrderHistory from './orderHistory';
+import EditProfile from './editProfile';
+import style from '../style/user';
+import user from '../image/user.png';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Logout from 'react-native-vector-icons/AntDesign';
 
-import {logoutCreator, getDataUserCreator} from '../redux/actions/action';
-
-// import BottomNav from '../components/customer/bottomNav';
-
-const User = ({navigation}) => {
-  const auth = useSelector((state) => state.auth.data.data);
-  const dataUser = useSelector((state) => state.auth.dataUser);
+const UserProfile = ({navigation}) => {
+  const {auth} = useSelector((state) => state);
+  const [visible, setVisible] = useState(false);
+  const [logout, setLogout] = useState(false);
 
   const dispatch = useDispatch();
+  const id = () => {
+    if (auth.data !== null) {
+      return auth.data.id;
+    } else {
+      return null;
+    }
+  };
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
   useEffect(() => {
-    dispatch(getDataUserCreator(auth.id_user));
-  }, []);
-
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+    if (logout) {
+      dispatch(logoutCreator());
+      dispatch(cancelCartCreator());
+      setLogout(false);
+      navigation.navigate('auth');
+    }
+  }, [dispatch, logout, navigation]);
+  useEffect(() => {
+    dispatch(getDataUserCreator(id()));
+  }, [dispatch]);
+  const handleLogout = () => {
+    console.log('wkwk');
+    setLogout(true);
+    console.log(logout);
   };
+
   return (
-    <View style={{flex: 1}}>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: '#4abdac',
-          borderBottomRightRadius: 50,
-          borderBottomLeftRadius: 50,
-          position: 'relative',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-        }}>
-        {dataUser[0].image ? (
-          <Image
-            source={{uri: dataUser[0].image}}
-            style={{
-              width: 150,
-              height: 150,
-              borderRadius: 100,
-              position: 'absolute',
-              bottom: -70,
-            }}
-          />
-        ) : (
-          <Image
-            source={require('../assets/images/userImage.png')}
-            style={{
-              width: 150,
-              height: 150,
-              borderRadius: 100,
-              position: 'absolute',
-              bottom: -70,
-            }}
-          />
+    <ScrollView style={style.container}>
+      <View style={style.header}>
+        <View style={style.photo}>
+          {auth.dataUser === null ? (
+            <Image source={user} style={style.userImg} />
+          ) : auth.dataUser[0].picture === null ? (
+            <Image source={user} style={style.userImg} />
+          ) : (
+            <Image
+              source={{uri: auth.dataUser[0].picture}}
+              style={style.userImg}
+            />
+          )}
+        </View>
+        {auth.dataUser === null ? null : (
+          <Text style={style.name}>{auth.dataUser[0].username}</Text>
         )}
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
+      <TouchableOpacity
+        style={style.list}
+        onPress={() => navigation.navigate('orderhistory')}>
+        <Icon name="table" size={25} />
+        <Text style={style.listText}>Order History</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={style.list}
+        onPress={() => navigation.navigate('editprofile')}>
+        <Icon name="edit" size={25} />
+        <Text style={style.listText}>Edit Profile</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={style.list}
+        onPress={() => {
+          toggleOverlay();
         }}>
-        <Text style={{marginTop: 80, fontWeight: 'bold', fontSize: 20}}>
-          {dataUser[0].username}
-        </Text>
-      </View>
-      <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-        <TouchableOpacity onPress={() => navigation.navigate('editProfile')}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon name="user-edit" color={'#4abdac'} size={35} />
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 20,
-                color: '#4abdac',
-                paddingRight: 15,
-              }}>
-              Edit Profile
-            </Text>
+        <Logout name="logout" size={25} />
+        <Text style={style.listText}>Logout</Text>
+      </TouchableOpacity>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={style.promp}>
+        <View style={style.overlayCont}>
+          <Text>Logout ?</Text>
+          <View style={style.btn}>
+            <TouchableOpacity
+              onPress={() => {
+                handleLogout();
+                toggleOverlay();
+              }}
+              style={style.yes}>
+              <Text style={style.str}>Yes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={style.no} onPress={() => toggleOverlay()}>
+              <Text style={style.strno}>No</Text>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon name="clipboard-list" color={'#4abdac'} size={35} />
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 20,
-                color: '#4abdac',
-                paddingLeft: 15,
-              }}>
-              History
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={{paddingHorizontal: 25, paddingBottom: 30}}>
-        <TouchableOpacity>
-          <Button
-            rounded
-            block
-            danger
-            onPress={() => {
-              toggleModal();
-            }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: 'white'}}>
-              LOGOUT
-            </Text>
-          </Button>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </Overlay>
+    </ScrollView>
+  );
+};
 
-      <View>
-        <Modal
-          isVisible={isModalVisible}>
-          <View
-            style={{
-              backgroundColor: 'white',
-              padding: 22,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 4,
-              borderColor: 'rgba(0, 0, 0, 0.1)',
-            }}>
-            <Text style={{fontSize: 20, marginBottom: 12}}>
-              Logout ?
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-              }}>
-              <View style={{paddingHorizontal: 10}}>
-                <TouchableOpacity>
-                  <Button
-                    style={{width: 100}}
-                    block
-                    rounded
-                    success
-                    onPress={() => {
-                      dispatch(logoutCreator());
-                      navigation.navigate('login');
-                      toggleModal();
-                    }}>
-                    <Text style={{fontWeight: 'bold', color: 'white'}}>
-                      Yes
-                    </Text>
-                  </Button>
-                </TouchableOpacity>
-              </View>
-              <View style={{paddingHorizontal: 10}}>
-                <TouchableOpacity>
-                  <Button
-                    style={{width: 100}}
-                    block
-                    rounded
-                    danger
-                    onPress={toggleModal}>
-                    <Text style={{fontWeight: 'bold', color: 'white'}}>No</Text>
-                  </Button>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </View>
-    </View>
+const Stack = createStackNavigator();
+
+const User = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="user"
+        component={UserProfile}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="orderhistory"
+        component={OrderHistory}
+        options={{
+          headerTitle: 'Order History',
+        }}
+      />
+      <Stack.Screen
+        name="editprofile"
+        component={EditProfile}
+        options={{
+          headerTitle: 'Edit your profile',
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 
