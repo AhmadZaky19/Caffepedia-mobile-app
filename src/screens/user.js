@@ -43,7 +43,7 @@ const UserProfile = ({navigation}) => {
     dispatch(getDataUserCreator(id()));
   }, [dispatch]);
   const handleLogout = () => {
-    console.log('wkwk');
+    console.log('tes');
     setLogout(true);
     console.log(logout);
   };

@@ -142,10 +142,10 @@ const Search = ({navigation}) => {
                 toggleOverlay();
               }}
               style={style.yes}>
-              <Text style={style.str}>yes</Text>
+              <Text style={style.str}>Yes</Text>
             </TouchableOpacity>
             <TouchableOpacity style={style.no} onPress={() => toggleOverlay()}>
-              <Text style={style.strno}>no</Text>
+              <Text style={style.strno}>No</Text>
             </TouchableOpacity>
           </View>
         </View>

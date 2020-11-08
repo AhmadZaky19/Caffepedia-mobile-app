@@ -14,10 +14,11 @@ import {
 } from 'react-native';
 import style from '../style/addMenu';
 import Fork from 'react-native-vector-icons/MaterialCommunityIcons';
+import {API_URL} from '../utils/environment';
 
 const AddMenu = () => {
   // state
-  const [image, setImage] = useState(null);
+  const [picture, setPicture] = useState(null);
   const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
   const [id_category, setidCategory] = useState(null);
@@ -56,10 +57,10 @@ const AddMenu = () => {
       } else {
         const source = response;
         if (response.fileSize > 200000) {
-          setImage(null);
+          setPicture(null);
           alert();
         } else {
-          setImage(source);
+          setPicture(source);
         }
       }
     });
@@ -75,7 +76,7 @@ const AddMenu = () => {
   const handleSubmit = () => {
     if (
       name === null ||
-      image === null ||
+      picture === null ||
       price === null ||
       id_category === null
     ) {
@@ -83,11 +84,11 @@ const AddMenu = () => {
     } else {
       let data = new FormData();
       data.append('name', name);
-      data.append('image', {
-        uri: `file://${image.path}`,
-        type: image.type,
-        name: image.fileName,
-        size: image.fileSize,
+      data.append('picture', {
+        uri: `file://${picture.path}`,
+        type: picture.type,
+        name: picture.fileName,
+        size: picture.fileSize,
       });
       data.append('price', price);
       data.append('id_category', id_category);
@@ -101,7 +102,7 @@ const AddMenu = () => {
           accept: 'application/json',
         },
       };
-      const url = 'http://192.168.1.5:8000/';
+      const url = `${API_URL}`;
       Axios.post(url, data, config)
         .then((res) => {
           console.log(res);
@@ -113,7 +114,7 @@ const AddMenu = () => {
           console.log(err);
         });
       setCatName(null);
-      setImage(null);
+      setPicture(null);
       setName(null);
       setPrice(null);
       setLoading(true);
@@ -151,7 +152,7 @@ const AddMenu = () => {
               onPress={() => {
                 handleChoose();
               }}>
-              {image === null ? (
+              {picture === null ? (
                 <Text style={{fontWeight: 'bold', color: 'black'}}>
                   Select picture{' '}
                 </Text>
@@ -159,7 +160,7 @@ const AddMenu = () => {
                 <Text style={{fontWeight: 'bold', color: 'black'}}>Change</Text>
               )}
             </TouchableOpacity>
-            <Image source={image} style={style.pic} />
+            <Image source={picture} style={style.pic} />
           </View>
           <Input
             placeholder="name"

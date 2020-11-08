@@ -2,33 +2,33 @@ import Axios from 'axios';
 import {API_URL} from './environment';
 
 export const getMenu = () => {
-  return Axios.get('http://192.168.1.5:8000/?page=1&limit=1000');
+  return Axios.get(`${API_URL}?page=1&limit=1000`);
 };
 
 export const getMenuAll = () => {
-  return Axios.get('http://192.168.1.5:8000/?page=1&limit=6');
+  return Axios.get(`${API_URL}?page=1&limit=6`);
 };
 
 export const getMoreMenu = (page) => {
-  return Axios.get(`http://192.168.1.5:8000/?page=${page}&limit=6`);
+  return Axios.get(`${API_URL}?page=${page}&limit=6`);
 };
 
 export const getCategory = () => {
-  return Axios.get('http://192.168.1.5:8000/category');
+  return Axios.get(`${API_URL}category`);
 };
 
 export const searchMenu = (name) => {
-  const url = 'http://192.168.1.5:8000/search';
+  const url = `${API_URL}search`;
   return Axios.get(`${url}?name=${name}&by=name`);
 };
 
 export const getOrderHistory = (name) => {
-  const url = `http://192.168.1.5:8000/orderuser?name=${name}`;
+  const url = `${API_URL}orderuser?name=${name}`;
   return Axios.get(url);
 };
 
 export const getAllOrderHistory = () => {
-  const url = 'http://192.168.1.5:8000/orderuser/all';
+  const url = `${API_URL}orderuser/all`;
   return Axios.get(url);
 };
 
@@ -39,22 +39,22 @@ export const insertOrder = (date, name, orders, amount) => {
     orders: orders,
     amount: amount,
   };
-  const url = 'http://192.168.1.5:8000/orderuser';
+  const url = `${API_URL}orderuser`;
   return Axios.post(url, data);
 };
 
 export const deleteOrder = (id) => {
-  const url = `http://192.168.1.5:8000/orderuser?id=${id}`;
+  const url = `${API_URL}orderuser?id=${id}`;
   return Axios.delete(url);
 };
 
 export const deleteMenu = (id) => {
-  const url = `http://192.168.1.5:8000/?id=${id}`;
+  const url = `${API_URL}?id=${id}`;
   return Axios.delete(url);
 };
 
 export const login = (username, password) => {
-  const url = 'http://192.168.1.5:8000/auth/login';
+  const url = `${API_URL}auth/login`;
   return Axios.post(url, {
     username: username,
     password: password,
@@ -62,7 +62,7 @@ export const login = (username, password) => {
 };
 
 export const register = (username, password) => {
-  const url = 'http://192.168.1.5:8000/auth/register';
+  const url = `${API_URL}auth/register`;
   return Axios.post(url, {
     username: username,
     password: password,
@@ -96,19 +96,19 @@ export const register = (username, password) => {
 //       accept: 'application/json',
 //     },
 //   };
-//   const url = 'http://192.168.1.5:8000/';
+//   const url = '${API_URL}';
 //   return Axios.patch(url, data, config);
 // };
-export const editMenu = (name, image, price, id_category, id_menu) => {
+export const editMenu = (name, picture, price, id_category, id_menu) => {
   let data = new FormData();
   if (name !== null) {
     data.append('name', name);
-  } else if (image !== null) {
-    data.append('image', {
-      uri: `file://${image.path}`,
-      type: image.type,
-      name: image.fileName,
-      size: image.fileSize,
+  } else if (picture !== null) {
+    data.append('picture', {
+      uri: `file://${picture.path}`,
+      type: picture.type,
+      name: picture.fileName,
+      size: picture.fileSize,
     });
   } else if (price !== null) {
     data.append('price', price);
@@ -125,7 +125,7 @@ export const editMenu = (name, image, price, id_category, id_menu) => {
       accept: 'application/json',
     },
   };
-  const url = 'http://192.168.1.5:8000/';
+  const url = `${API_URL}`;
   return Axios.patch(url, data, config);
 };
 
@@ -151,11 +151,11 @@ export const updateProfile = (username, image, id) => {
       accept: 'application/json',
     },
   };
-  const url = 'http://192.168.1.5:8000/auth/update';
+  const url = `${API_URL}auth/update`;
   return Axios.patch(url, data, config);
 };
 
 export const getDataUser = (id) => {
-  const url = `http://192.168.1.5:8000/auth?id=${id}`;
+  const url = `${API_URL}auth?id=${id}`;
   return Axios.get(url);
 };

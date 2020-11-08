@@ -60,14 +60,6 @@ const Order = () => {
                     <Text style={style.bold}>{item.amount}</Text>
                   </View>
                 </View>
-                <TouchableOpacity
-                  style={style.delete}
-                  onPress={() => {
-                    dispatch(deleteOrderCreator(item.id));
-                    dispatch(getOrderUserCreator(name));
-                  }}>
-                  <Icon name="trash" color="#F95A50" size={27} />
-                </TouchableOpacity>
               </View>
             );
           })
@@ -97,14 +89,6 @@ const Order = () => {
                   <Text style={style.bold}>{item.amount}</Text>
                 </View>
               </View>
-              <TouchableOpacity
-                style={style.delete}
-                onPress={() => {
-                  dispatch(deleteOrderCreator(item.id));
-                  dispatch(getOrderUserCreator(name));
-                }}>
-                <Icon name="trash" color="#F95A50" size={27} />
-              </TouchableOpacity>
             </View>
           );
         })

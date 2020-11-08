@@ -21,7 +21,7 @@ const Edit = ({navigation}) => {
   const dispatch = useDispatch();
   // state
 
-  const [image, setImage] = useState(null);
+  const [picture, setPicture] = useState(null);
   const [name, setName] = useState(null);
   const [price, setPrice] = useState(null);
   const [id_category, setidCategory] = useState(null);
@@ -61,7 +61,7 @@ const Edit = ({navigation}) => {
         if (response.fileSize > 200000) {
           alert();
         } else {
-          setImage(source);
+          setPicture(source);
         }
       }
     });
@@ -90,7 +90,7 @@ const Edit = ({navigation}) => {
         <View style={style.form}>
           <View style={style.imgPicker}>
             {press ? (
-              <Image source={image} style={style.pic} />
+              <Image source={picture} style={style.pic} />
             ) : (
               <Image source={{uri: menu.editData.picture}} style={style.pic} />
             )}
@@ -145,7 +145,7 @@ const Edit = ({navigation}) => {
             onPress={() => {
               if (
                 name === null &&
-                image === null &&
+                picture === null &&
                 price === null &&
                 id_category === null
               ) {
@@ -154,7 +154,7 @@ const Edit = ({navigation}) => {
                 dispatch(
                   editDataCreator(
                     name,
-                    image,
+                    picture,
                     price,
                     id_category,
                     menu.editData.id_menu,

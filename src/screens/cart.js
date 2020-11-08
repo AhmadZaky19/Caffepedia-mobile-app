@@ -95,7 +95,7 @@ const Cart = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={style.title}>
-        <Text style={style.shopBag}>My order list</Text>
+        <Text style={style.shopBag}>Order list</Text>
         <Text style={style.qty}>{menu.cart.length} items add</Text>
       </View>
       <ScrollView
