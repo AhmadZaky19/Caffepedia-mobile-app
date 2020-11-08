@@ -60,3 +60,4 @@ buck-out/
 
 # misc
 .env
+/src/utils/environment.js
